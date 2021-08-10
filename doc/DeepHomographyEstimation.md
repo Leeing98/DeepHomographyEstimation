@@ -10,5 +10,20 @@
 >> 3. [**mez**](https://github.com/mazenmel/Deep-homography-estimation-Pytorch)(包含数据集预处理可视化全过程的ipynb文件)
 
 <br/><br/><br/>
-## 主要思路
+## 1. 主要思路
 本文希望通过输入两幅大小一致的图像由网络学习得到**8个参数**，对应两幅图像之间存在的单应关系（矩阵H为8DoF）。
+#### 矩阵H形式化
+
+
+<br/><br/>
+## 2. 合成数据集
+> - 来源：[MSCOCO](https://cocodataset.org/#download) 2014train/val/testing
+> - 合成方法：
+
+
+<br/><br/>
+## 3. 网络结构
+
+
+
+
