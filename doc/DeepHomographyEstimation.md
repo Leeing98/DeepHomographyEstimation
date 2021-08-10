@@ -45,7 +45,10 @@
 
 <br/><br/><br/>
 ## 3. 网络结构
-
+<br/>
+<div align=center>
+  <img src="https://github.com/Leeing98/DeepHomographyEstimation/blob/main/img_folder/Deep%20Image%20Homography%20Estimation.png" width="800" height="200">
+  </div>
 
 
 
