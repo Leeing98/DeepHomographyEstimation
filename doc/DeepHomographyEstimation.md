@@ -29,7 +29,11 @@
 ## 2. 合成数据集
 > - 来源：[MSCOCO](https://cocodataset.org/#download) 2014 train/val/testing
 > - 合成方法：
->> 1. 对于MSCOCO数据集的图像，
+>> 1. 对于MSCOCO数据集的图像，选定一个**随机的位置点p**
+>> 2. 以p为patch的左上角顶点，确定长宽均为128的**patchA**
+>> 3. 对patchA的四个顶点做x,y轴上随机的摆动，得到4-points长度为**8维的偏移量**
+>> 4. 四个顶点变换前的坐标到变换后的坐标存在一个单应变换矩阵HAB，将原图像乘上HBA（逆矩阵）得到warped图像
+>> 5. 在warped图像上同一位置p上取一个128x128大小的patch名为**patchB**
 
 
 <br/>
