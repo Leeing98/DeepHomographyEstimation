@@ -40,7 +40,63 @@
 <div align=center>
   <img src="https://github.com/Leeing98/DeepHomographyEstimation/blob/main/img_folder/Training%20Data%20Generation.png" width="500" height="500">
   </div>
+  
+### 合成数据集代码示例
+该代码来自mazenmel主页的[DataGeneration文件](https://github.com/mazenmel/Deep-homography-estimation-Pytorch/blob/master/DataGenerationAndProcessing.py)
+ <br/>详细的可视化过程见mez主页的[data_generation文件](https://github.com/mez/deep_homography_estimation/blob/master/Dataset_Generation_Visualization.ipynb)
+ ```python
+    img = cv2.imread(path+'/%s'%image,0)
+    img = cv2.resize(img,(320,240))
+ ```
+ 在此处将COCO数据集内的图像均resize为宽为320，高为240的图像。
+```python
+    rho          = 32
+    patch_size   = 128
+    top_point    = (32,32)
+    left_point   = (patch_size+32, 32)
+    bottom_point = (patch_size+32, patch_size+32)
+    right_point  = (32, patch_size+32)
+    test_image = img.copy()
+    four_points = [top_point, left_point, bottom_point, right_point]
+```
+此处固定了左上角p位置的坐标为(32,32)，patch的大小为128\*128，则可以确定patchA四个顶点的坐标four_points。位置p的坐标实际应当也取一个范围内的随机值，这里简化为固定点。
+```python
+    perturbed_four_points = []
+    for point in four_points:
+        perturbed_four_points.append((point[0] + random.randint(-rho,rho), point[1]+random.randint(-rho,rho)))
+```
+perturbed_four_points作为四个点偏移后坐标的集合，rho是四个点在xy方向上偏移的最大量，因此此处取了(-rho,rho)之间的随机整数。
+```python
+    H = cv2.getPerspectiveTransform( np.float32(four_points), np.float32(perturbed_four_points) )
+    H_inverse = inv(H)
 
+    warped_image = cv2.warpPerspective(img,H_inverse, (320,240))
+```
+patchA到patchB之间的单应矩阵由opencv的函数计算为H，对**原图**乘上H的逆矩阵，得到warped图像。
+```python
+    Ip1 = test_image[top_point[1]:bottom_point[1],top_point[0]:bottom_point[0]]
+    Ip2 = warped_image[top_point[1]:bottom_point[1],top_point[0]:bottom_point[0]]
+
+    training_image = np.dstack((Ip1, Ip2))
+    H_four_points = np.subtract(np.array(perturbed_four_points), np.array(four_points))
+    datum = (training_image, H_four_points)
+    
+    return datum
+```
+对**原图**和**warped图像**都在同一位置p上截取一个128\*128大小的patch(Ip1,Ip2)，该生成函数返回的值就是由Ip1、Ip2深度堆叠和H组合的元组。
+```python
+def savedata(path):
+    lst = os.listdir(path+'/')
+    os.makedirs(path+'processed/')
+    new_path = path+'processed/'
+    for i in lst:
+        np.save(new_path+'%s'%i[0:12],ImagePreProcessing(i,path))
+        
+savedata(train_path)
+savedata(validation_path)
+savedata(test_path)
+```
+最初的COCO训练集的图片集合存储在train2014文件夹里，处理后的数据将以.npy文件格式存储在train2014processed文件夹里
 
 
 <br/><br/><br/>
@@ -51,4 +107,9 @@
   </div>
 
 
+<br/><br/>
+## 4.复现实验
+### 合成数据集过程
+leeing：由于MSCOCO2014训练集的图像数量有82783幅图像，在生成.npy图像的过程中时间消耗巨大，据估计花费2-3h。
+根据单个epoch的时间消耗，整个训练完成下来需要花费近10天，因此中止了训练过程，下一步调整数据集的图像数量。
 
