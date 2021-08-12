@@ -83,7 +83,7 @@ patchA到patchB之间的单应矩阵由opencv的函数计算为H，对**原图**
     
     return datum
 ```
-对**原图**和**warped图像**都在同一位置p上截取一个128\*128大小的patch(Ip1,Ip2)，该生成函数返回的值就是由Ip1、Ip2深度堆叠和H组合的元组。
+对**原图**和**warped图像**都在同一位置p上截取一个128\*128大小的patch(Ip1,Ip2)，该生成函数返回的值就是由**Ip1、Ip2深度堆叠**和**4-points偏移量**的元组。
 ```python
 def savedata(path):
     lst = os.listdir(path+'/')
@@ -115,8 +115,10 @@ savedata(test_path)
 
 ## 4. 实验结果
 实验分为两个网络——回归网络和分类网络。  
-- 回归网络的输出为8维张量，直接对应4-points的8个偏移量。
-- 分类网络的输出是8\*21大小的张量，
+
+- 回归网络的输出为8维张量，直接对应4-points的8个偏移量。GT是8个偏移量
+- 分类网络的输出是8\*21大小的张量，每个21维的向量表示在该坐标值在取值范围\[10,-10]的概率。GT由正确的偏移量确定，eg：某点x坐标的偏移为-3，则21维向量里代表-3的那一位概率为1，其余都为0。
+
 <br/>
 <div align=center>
   <img src="https://github.com/Leeing98/DeepHomographyEstimation/blob/main/img_folder/Regression%20HomographyNet.png" width="350" height="210">
