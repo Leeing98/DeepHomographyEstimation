@@ -105,10 +105,26 @@ savedata(test_path)
 <div align=center>
   <img src="https://github.com/Leeing98/DeepHomographyEstimation/blob/main/img_folder/Deep%20Image%20Homography%20Estimation.png" width="800" height="200">
   </div>
+  
+<br/>
+- 8个卷积层和2个全连接层
+- 每两个卷积层后接一个最大池化层
+- 在Conv8和第一个全连接层后都有一个概率为0.5的dropout层
+
+<br/><br/>
+
+## 4. 实验结果
+实验分为两个网络——回归网络和分类网络。  
+- 回归网络的输出为8维张量，直接对应4-points的8个偏移量。
+- 分类网络的输出是8\*21大小的张量，
+<br/>
+<div align=center>
+  <img src="https://github.com/Leeing98/DeepHomographyEstimation/blob/main/img_folder/Regression%20HomographyNet.png" width="350" height="210">
+  </div>
 
 
 <br/><br/>
-## 4.复现实验
+## 5.复现实验
 ### 合成数据集过程
 leeing：由于MSCOCO2014训练集的图像数量有82783幅图像，在生成.npy图像的过程中时间消耗巨大，据估计花费2-3h。
 根据单个epoch的时间消耗，整个训练完成下来需要花费近10天，因此中止了训练过程，下一步调整数据集的图像数量。
