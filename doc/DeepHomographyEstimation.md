@@ -24,7 +24,6 @@
 </div>
 
 
-
 <br/><br/><br/>
 ## 2. 合成数据集
 > - 来源：[MSCOCO](https://cocodataset.org/#download) 2014 train/val/testing
@@ -107,12 +106,49 @@ savedata(test_path)
   </div>
   
 <br/>
+
 - 8个卷积层和2个全连接层
 - 每两个卷积层后接一个最大池化层
 - 在Conv8和第一个全连接层后都有一个概率为0.5的dropout层
 
-<br/><br/>
+```python
+class Model(nn.Module):
+    def __init__(self):
+        super(Model,self).__init__()
+        self.layer1 = nn.Sequential(nn.Conv2d(2,64,3,padding=1),
+                                    nn.BatchNorm2d(64),
+                                    nn.ReLU())
+                                    
+        self.layer2 = nn.Sequential(nn.Conv2d(64,64,3,padding=1),
+                                    nn.BatchNorm2d(64),
+                                    nn.ReLU(),
+                                    nn.MaxPool2d(2))
+        self.layer3 = nn.Sequential(nn.Conv2d(64,64,3,padding=1),
+                                    nn.BatchNorm2d(64),
+                                    nn.ReLU())
+        self.layer4 = nn.Sequential(nn.Conv2d(64,64,3,padding=1),
+                                    nn.BatchNorm2d(64),
+                                    nn.ReLU(),
+                                    nn.MaxPool2d(2))
+        self.layer5 = nn.Sequential(nn.Conv2d(64,128,3,padding=1),
+                                    nn.BatchNorm2d(128),
+                                    nn.ReLU())        
+        self.layer6 = nn.Sequential(nn.Conv2d(128,128,3,padding=1),
+                                    nn.BatchNorm2d(128),
+                                    nn.ReLU(),
+                                    nn.MaxPool2d(2))
+        self.layer7 = nn.Sequential(nn.Conv2d(128,128,3,padding=1),
+                                    nn.BatchNorm2d(128),
+                                    nn.ReLU())
+        self.layer8 = nn.Sequential(nn.Conv2d(128,128,3,padding=1),
+                                    nn.BatchNorm2d(128),
+                                    nn.ReLU())
+        self.fc1 = nn.Linear(128*16*16,1024)
+        self.fc2 = nn.Linear(1024,8)
+```
 
+
+<br/><br/>
 ## 4. 实验结果
 实验分为两个网络——回归网络和分类网络。  
 
@@ -120,14 +156,19 @@ savedata(test_path)
 - 分类网络的输出是8\*21大小的张量，每个21维的向量表示在该坐标值在取值范围\[10,-10]的概率。GT由正确的偏移量确定，eg：某点x坐标的偏移为-3，则21维向量里代表-3的那一位概率为1，其余都为0。
 
 <br/>
-<div align=center>
-  <img src="https://github.com/Leeing98/DeepHomographyEstimation/blob/main/img_folder/Regression%20HomographyNet.png" width="350" height="210">
-  </div>
+
+<center>
+<figure>
+  <img src = "https://github.com/Leeing98/DeepHomographyEstimation/blob/main/img_folder/Regression%20HomographyNet.png"  width = "400" align = left>
+  <img src = "https://github.com/Leeing98/DeepHomographyEstimation/blob/main/img_folder/Classification%20HomographyNet.png"  width = "400" align = right>
+</figure>
+ </center>
 
 
-<br/><br/>
+<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
 ## 5.复现实验
 ### 合成数据集过程
 leeing：由于MSCOCO2014训练集的图像数量有82783幅图像，在生成.npy图像的过程中时间消耗巨大，据估计花费2-3h。
 根据单个epoch的时间消耗，整个训练完成下来需要花费近10天，因此中止了训练过程，下一步调整数据集的图像数量。
+
 
