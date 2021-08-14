@@ -16,21 +16,24 @@
 
 <br/>
 <div align=center>
-<img src="https://github.com/Leeing98/DeepHomographyEstimation/blob/main/img_folder/4points_parameterization.png" width="460" height="200">
-</div>
-
-#### Photometric Loss函数
-
-<br/>
-<div align=center>
-<img src="https://github.com/Leeing98/DeepHomographyEstimation/blob/main/img_folder/4points_parameterization.png" width="460" height="200">
+<img src="https://github.com/Leeing98/DeepHomographyEstimation/blob/main/img_folder/pipeline1.png" width="700" height="350">
 </div>
 
 
 <br/><br/><br/>
+#### Photometric Loss函数
+
+<br/>
+<div align=center>
+  <img src="https://github.com/Leeing98/DeepHomographyEstimation/blob/main/img_folder/pipeline2.png" width="700" height="350">
+</div>
+<br/>
+<div align=center>
+  <img src="https://github.com/Leeing98/DeepHomographyEstimation/blob/main/img_folder/Photometric%20loss.png" width="400" height="300">
+</div>
+
+<br/><br/><br/><br/><br/><br/>
 ## 2. 合成数据集
-
-
 <br/>
 <div align=center>
   <img src="https://github.com/Leeing98/DeepHomographyEstimation/blob/main/img_folder/Training%20Data%20Generation.png" width="500" height="500">
@@ -53,16 +56,13 @@
 
 <br/><br/>
 ## 4. 实验结果
-实验分为两个网络——回归网络和分类网络。  
 
-- 回归网络的输出为8维张量，直接对应4-points的8个偏移量。GT是8个偏移量
-- 分类网络的输出是8\*21大小的张量，每个21维的向量表示在该坐标值在取值范围\[10,-10]的概率。GT由正确的偏移量确定，eg：某点x坐标的偏移为-3，则21维向量里代表-3的那一位概率为1，其余都为0。
 
 <br/>
 
 <center>
 <figure>
-  <img src = "https://github.com/Leeing98/DeepHomographyEstimation/blob/main/img_folder/Regression%20HomographyNet.png"  width = "400" align = left>
+  <img src = ""  width = "400" align = left>
 </figure>
  </center>
 
