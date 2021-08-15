@@ -20,7 +20,7 @@
 相比较3x3的参数化形式，由于H中混合了旋转成分、平移成分、尺度成分和错切成分。平移分量比旋转和错切分量在数值上变换更大。当计算矩阵误差时，两者对矩阵值的影响都很大，但旋转分量的差值对L2损失函数所造成的**影响比重**比平移向量小。
 <br/>
 <div align=center>
-<img src="https://github.com/Leeing98/DeepHomographyEstimation/blob/main/img_folder/4points_parameterization.png" width="460" height="200">
+<img src="../.asset/DeepHomography/4points_parameterization.png" width="460" height="200">
 </div>
 
 
