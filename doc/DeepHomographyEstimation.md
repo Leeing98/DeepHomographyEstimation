@@ -41,8 +41,8 @@
   </div>
   
 ### 合成数据集代码示例
-该代码来自mazenmel主页的[DataGeneration文件](https://github.com/mazenmel/Deep-homography-estimation-Pytorch/blob/master/DataGenerationAndProcessing.py)
- <br/>详细的可视化过程见mez主页的[data_generation文件](https://github.com/mez/deep_homography_estimation/blob/master/Dataset_Generation_Visualization.ipynb)
+> 该代码来自mazenmel主页的[DataGeneration文件](https://github.com/mazenmel/Deep-homography-estimation-Pytorch/blob/master/DataGenerationAndProcessing.py)
+> <br/>详细的可视化过程见mez主页的[data_generation文件](https://github.com/mez/deep_homography_estimation/blob/master/Dataset_Generation_Visualization.ipynb)
  ```python
     img = cv2.imread(path+'/%s'%image,0)
     img = cv2.resize(img,(320,240))
