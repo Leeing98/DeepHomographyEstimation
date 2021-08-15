@@ -4,6 +4,7 @@
 ## 基于监督学习的单应估计网络
 - [Deep image homography estimation(2016)](https://github.com/Leeing98/DeepHomographyEstimation/blob/main/doc/DeepHomographyEstimation.md)
 - [A view-free image stitching network based on global homography](./doc/VFISnet.md)
+- [Real-Time Image Stitching with Convolutional Neural Networks](./doc/Real_Time_Image_Stitching.md)
  
 <br/>
 
