@@ -20,7 +20,7 @@
 相比较3x3的参数化形式，由于H中混合了旋转成分、平移成分、尺度成分和错切成分。平移分量比旋转和错切分量在数值上变换更大。当计算矩阵误差时，两者对矩阵值的影响都很大，但旋转分量的差值对L2损失函数所造成的**影响比重**比平移向量小。
 <br/>
 <div align=center>
-<img src="../.asset/DeepHomography/4points_parameterization.png" width="460" height="200">
+<img src="../.assets/DeepHomography/4points_parameterization.png" width="460" height="200">
 </div>
 
 
@@ -37,7 +37,7 @@
 
 <br/>
 <div align=center>
-  <img src="https://github.com/Leeing98/DeepHomographyEstimation/blob/main/img_folder/Training%20Data%20Generation.png" width="500" height="500">
+  <img src="../.assets/DeepHomography/Training Data Generation.png" width="500" height="500">
   </div>
   
 ### 合成数据集代码示例
@@ -102,7 +102,7 @@ savedata(test_path)
 ## 3. 网络结构
 <br/>
 <div align=center>
-  <img src="https://github.com/Leeing98/DeepHomographyEstimation/blob/main/img_folder/Deep%20Image%20Homography%20Estimation.png" width="800" height="200">
+  <img src="../.assets/DeepHomography/Deep Image Homography Estimation.png" width="800" height="200">
   </div>
   
 <br/>
@@ -159,8 +159,8 @@ class Model(nn.Module):
 
 <center>
 <figure>
-  <img src = "https://github.com/Leeing98/DeepHomographyEstimation/blob/main/img_folder/Regression%20HomographyNet.png"  width = "400" align = left>
-  <img src = "https://github.com/Leeing98/DeepHomographyEstimation/blob/main/img_folder/Classification%20HomographyNet.png"  width = "400" align = right>
+  <img src = "../.assets/DeepHomography/Regression HomographyNet.png"  width = "400" align = left>
+  <img src = "../.assets/DeepHomography/Classification HomographyNet.png"  width = "400" align = right>
 </figure>
  </center>
 
