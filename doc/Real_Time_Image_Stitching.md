@@ -44,6 +44,7 @@ $$
 $$
         l_{VGG}=\frac{1}{whc}\sum_{x=0}^{w-1}\sum_{y=0}^{h-1}\sum_{z=0}^{c-1}(\phi(I^{GT}_{x,y,z})-\phi(G(I^{In}))_{x,y,z})^2
 $$
+$$
   l_{Adv}=\frac{1}{2}E[(D(G(I^{In}))- 1)^2]
 $$
 **Dicriminator loss**
