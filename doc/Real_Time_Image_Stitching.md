@@ -57,7 +57,7 @@ $$
 **pre_train generator loss**</br>
 这是预训练generator时使用的MSE loss
 $$
-l_{MSE}=\frac{1}{whc}\sum_{x=0}^{w-1}\sum_{y=0}^{h-1}\sum_{z=0}^{c-1}(I^{GT}_{x,y,z}-G(I^{In})_{x,y,z})^2
+l_{MSE}=\frac{1}{whc}\sum_{x=0}^{w-1}\sum_{y=0}^{h-1}\sum_{z=0}^{c-1}(I^{GT}_{x,y,z}-G(I^{In}_{x,y,z}))^2
 $$
 ### 评价指标
 **PSNR(Peak Signal to Noise Ratio)**</br>
