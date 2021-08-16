@@ -14,7 +14,10 @@
 本文利用Daniel监督学习的回规模型学习出四个点的偏移量（8维tensor），因为要根据这个输出得到两幅patch之间的单应矩阵H，所以需要增加一个新的输出，也就是patchA四个顶点的初始值。
 
 #### 单应矩阵DLT求解
-下图中红色方框中就是本文网络框架中新增的输入：**patchA四个顶点的初始坐标**，和**图A原图**（非patch）。初始坐标加上预测出的8个偏移量，可以得到patchB的四个顶点坐标，四个顶点对应四个顶点，通过DLT求解之间存在的单应变换矩阵
+下图中红色方框中就是本文网络框架中新增的输入：**patchA四个顶点的初始坐标**，和**图A原图**（非patch）。初始坐标加上预测出的8个偏移量，可以得到patchB的四个顶点坐标，四个顶点对应四个顶点，通过DLT求解之间存在的单应变换矩阵。
+<br/>
+
+> 见下图标出的两个输入tensor DLT的箭头，分别就是patchA的四个坐标和patchB的四个坐标，输入进DLT模块。
 
 <br/>
 <div align=center>
@@ -25,6 +28,10 @@
 <br/><br/><br/>
 #### Photometric Loss函数
 与Deep Homography Estimation论文中loss函数的构造方式不同，Daniel论文利用8个参数的GT和预测值之间的**欧式距离**作为loss———本篇论文则是利用预测的8个值按照DLT方法求解单应矩阵，单应矩阵对图像进行变形，loss函数是由参考图像和变形后图像像素的**L1范式距离**决定的。
+<br/>
+
+> 如下图所示，从DLT中计算得到的单应矩阵$\tilde{H}$
+
 <br/>
 <div align=center>
   <img src="../.assets/Unsupervised/pipeline2.png" width="700" height="350">
