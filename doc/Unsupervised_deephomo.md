@@ -1,4 +1,4 @@
-# Unsupervised Deep Image Stitching: Reconstructing Stitched Features to Images  
+# Unsupervised Deep Homography: A Fast and Robust Homography Estimation Model 
 ###### 本篇论文提出一个基于非监督学习单应矩阵的神经网络，是在Daniel D.T.等人发表的Deep Homography Estimation论文上的一个改进方案。Daniel的网络在合成数据集上虽然能呈现较好的结果，但在真实数据集上仍然存在较大的误差。本文通过重新定义损失函数，将4-points的差值转化为图像像素级的差值来实现反向传播。论文中提出利用Spatial Transform Layer实现图像的变形。<br/><br/><br/>
 
 
@@ -11,34 +11,41 @@
 
 
 ## 1. 主要思路
-本文利用Daniel监督学习的回规模型学习出四个点的偏移量，因为要根据这个输出得到两幅patch之间的单应矩阵H，所以需要增加一个新的输出，也就是patchA四个顶点的初始值。
+本文利用Daniel监督学习的回规模型学习出四个点的偏移量（8维tensor），因为要根据这个输出得到两幅patch之间的单应矩阵$\tilde{H}$，所以需要增加一个新的输出，也就是patchA四个顶点的初始值。
 
 #### 单应矩阵DLT求解
-下图中红色方框中就是本文网络框架中新增的输入：**patchA四个顶点的初始坐标**，和**图A原图**（非patch）。初始坐标加上预测出的8个偏移量，可以得到patchB的四个顶点坐标，四个顶点对应四个顶点，通过DLT求解之间存在的单应变换矩阵
+下图中红色方框中就是本文网络框架中新增的输入：**patchA四个顶点的初始坐标$C_{4pt}^{A}$**，和**图A原图$I_A$**（非patch）。初始坐标加上预测出的8个偏移量，可以得到patchB的四个顶点坐标，四个顶点对应四个顶点，通过DLT求解之间存在的单应变换矩阵。
+<br/>
+
+> 见下图标出的两个输入tensor DLT的箭头，分别就是patchA的四个坐标和patchB的四个坐标，输入进DLT模块。
 
 <br/>
 <div align=center>
-<img src="https://github.com/Leeing98/DeepHomographyEstimation/blob/main/img_folder/pipeline1.png" width="700" height="350">
+<img src="../.assets/Unsupervised/pipeline1.png" width="700" height="350">
 </div>
 
 
 <br/><br/><br/>
 #### Photometric Loss函数
+与Deep Homography Estimation论文中loss函数的构造方式不同，Daniel论文利用8个参数的GT和预测值之间的**欧式距离**作为loss———本篇论文则是利用预测的8个值按照DLT方法求解单应矩阵，单应矩阵对图像进行变形，loss函数是由参考图像和变形后图像像素的**L1范式距离**决定的。
+<br/>
+
+> 如下图所示，从DLT中计算得到的单应矩阵$\tilde{H}$，和patchA的原图$I_A$
 
 <br/>
 <div align=center>
-  <img src="https://github.com/Leeing98/DeepHomographyEstimation/blob/main/img_folder/pipeline2.png" width="700" height="350">
+  <img src="../.assets/Unsupervised/pipeline2.png" width="700" height="350">
 </div>
 <br/>
 <div align=center>
-  <img src="https://github.com/Leeing98/DeepHomographyEstimation/blob/main/img_folder/Photometric%20loss.png" width="400" height="300">
+  <img src="../.assets/Unsupervised/Photometric%20loss.png" width="400" height="300">
 </div>
 
 <br/><br/><br/><br/><br/><br/>
 ## 2. 合成数据集
 <br/>
 <div align=center>
-  <img src="https://github.com/Leeing98/DeepHomographyEstimation/blob/main/img_folder/Training%20Data%20Generation.png" width="500" height="500">
+  <img src="" width="500" height="500">
   </div>
   
 ### 合成数据集代码示例

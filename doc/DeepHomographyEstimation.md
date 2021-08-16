@@ -15,12 +15,12 @@
 ## 1. 主要思路
 本文希望通过输入两幅大小一致的图像由网络学习得到**8个参数**，对应两幅图像之间存在的单应关系（矩阵H为8DoF）。
 #### 矩阵H形式化
-单应性矩阵的表达𝐻_𝑚𝑎𝑡𝑟𝑖𝑥转化为对第一幅图像四个顶点坐标的8个维度（𝑥_𝑖, 𝑦_𝑖, 𝑖=1,2,…8 ）的偏移量𝐻_4𝑝𝑜𝑖𝑛𝑡。
+单应性矩阵的表达$H_{4point}$转化为对第一幅图像四个顶点坐标的8个维度（$x_i$, $y_i$, $i$=1, 2, … 8 ）的偏移$H_{4point}$。
 #### 4-points形式化的好处
 相比较3x3的参数化形式，由于H中混合了旋转成分、平移成分、尺度成分和错切成分。平移分量比旋转和错切分量在数值上变换更大。当计算矩阵误差时，两者对矩阵值的影响都很大，但旋转分量的差值对L2损失函数所造成的**影响比重**比平移向量小。
 <br/>
 <div align=center>
-<img src="https://github.com/Leeing98/DeepHomographyEstimation/blob/main/img_folder/4points_parameterization.png" width="460" height="200">
+<img src="../.assets/DeepHomography/4points_parameterization.png" width="460" height="200">
 </div>
 
 
@@ -37,12 +37,12 @@
 
 <br/>
 <div align=center>
-  <img src="https://github.com/Leeing98/DeepHomographyEstimation/blob/main/img_folder/Training%20Data%20Generation.png" width="500" height="500">
+  <img src="../.assets/DeepHomography/Training Data Generation.png" width="500" height="500">
   </div>
   
 ### 合成数据集代码示例
-该代码来自mazenmel主页的[DataGeneration文件](https://github.com/mazenmel/Deep-homography-estimation-Pytorch/blob/master/DataGenerationAndProcessing.py)
- <br/>详细的可视化过程见mez主页的[data_generation文件](https://github.com/mez/deep_homography_estimation/blob/master/Dataset_Generation_Visualization.ipynb)
+> 该代码来自mazenmel主页的[DataGeneration文件](https://github.com/mazenmel/Deep-homography-estimation-Pytorch/blob/master/DataGenerationAndProcessing.py)
+> <br/>详细的可视化过程见mez主页的[data_generation文件](https://github.com/mez/deep_homography_estimation/blob/master/Dataset_Generation_Visualization.ipynb)
  ```python
     img = cv2.imread(path+'/%s'%image,0)
     img = cv2.resize(img,(320,240))
@@ -102,7 +102,7 @@ savedata(test_path)
 ## 3. 网络结构
 <br/>
 <div align=center>
-  <img src="https://github.com/Leeing98/DeepHomographyEstimation/blob/main/img_folder/Deep%20Image%20Homography%20Estimation.png" width="800" height="200">
+  <img src="../.assets/DeepHomography/Deep Image Homography Estimation.png" width="800" height="200">
   </div>
   
 <br/>
@@ -159,8 +159,8 @@ class Model(nn.Module):
 
 <center>
 <figure>
-  <img src = "https://github.com/Leeing98/DeepHomographyEstimation/blob/main/img_folder/Regression%20HomographyNet.png"  width = "400" align = left>
-  <img src = "https://github.com/Leeing98/DeepHomographyEstimation/blob/main/img_folder/Classification%20HomographyNet.png"  width = "400" align = right>
+  <img src = "../.assets/DeepHomography/Regression HomographyNet.png"  width = "400" align = left>
+  <img src = "../.assets/DeepHomography/Classification HomographyNet.png"  width = "400" align = right>
 </figure>
  </center>
 
