@@ -1,4 +1,4 @@
-# Unsupervised Deep Image Stitching: Reconstructing Stitched Features to Images  
+# Unsupervised Deep Homography: A Fast and Robust Homography Estimation Model 
 ###### 本篇论文提出一个基于非监督学习单应矩阵的神经网络，是在Daniel D.T.等人发表的Deep Homography Estimation论文上的一个改进方案。Daniel的网络在合成数据集上虽然能呈现较好的结果，但在真实数据集上仍然存在较大的误差。本文通过重新定义损失函数，将4-points的差值转化为图像像素级的差值来实现反向传播。论文中提出利用Spatial Transform Layer实现图像的变形。<br/><br/><br/>
 
 
