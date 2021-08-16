@@ -36,7 +36,7 @@ $$
 **global correlation**
 > 将得到的两个feature maps $F_A, F_B\in W^l\times H^l\times C^l$进行全局的相关操作，得到$CV^l$
 > $$
-> CV^l(x_1,x_2)=\frac{<F_A^l(x_1), F_B^l(x_2)>}{|F_A^l(x_1)||F_B^l(x_2)|}\quad x_1,x_2\in \Z^2
+> CV^l(x_1,x_2)=\frac{<F_A^l(x_1), F_B^l(x_2)>}{|F_A^l(x_1)||F_B^l(x_2)|}\quad x_1,x_2\in \mathbb{Z}^2
 > $$
 - $F_A^l(x_1)$表示在$x_1$处的像素值，每一个像素值是一个维度为$C^l$的向量，这里的<>表示点乘。
 - 对feature1中的每一个像素点，计算第二幅图像中所有像素点与该点的correlation值，得到一个$W^l\times H^l$的向量。因此$CV^l$的大小为$W^l\times H^l\times (W^l\times H^l)$。
