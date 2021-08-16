@@ -45,7 +45,7 @@ $$
 $$
 **Dicriminator loss**
 $$
-\substack{\min\D}=\frac{1}{2}E[(D(I^{GT}) - 1)^2]+\frac{1}{2}E[(D(I^{In}) - 0)^2]
+\min_D=\frac{1}{2}E[(D(I^{GT}) - 1)^2]+\frac{1}{2}E[(D(I^{In}) - 0)^2]
 $$
 **pre_train generator loss**</br>
 这是预训练generator时使用的MSE loss
