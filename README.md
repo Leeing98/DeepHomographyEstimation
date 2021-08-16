@@ -12,6 +12,8 @@
 - [Unsupervised Deep Homography: A Fast and Robust Homography Estimation Model(2018)](./doc/Unsupervised_deephomo.md)
 - [Content-Aware Unsupervised Deep Homography Estimation(2020)](./doc/Content-aware.md)
 - [Depth-Aware Multi-Grid Deep Homography Estimation with Contextual Correlation(2021)](./doc/Depth-aware.md)
+- [Learning Edge-Preserved Image Stitching from Large-Baseline Deep Homography](./doc/Learning_Edge-Preserved_Image_Stitching_from_Large-Baseline_Deep_Homography.md)
+
 
 <br/>
 
