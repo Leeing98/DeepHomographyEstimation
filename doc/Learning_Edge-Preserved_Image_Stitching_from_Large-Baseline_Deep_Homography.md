@@ -47,9 +47,11 @@ $$
 每次由高层计算得到的单应性矩阵，将下一层目标特征图进行warp变换后继续与和其同层的参考特征图计算**残差**的八坐标偏移。每次计算Solving DLT的时候需要的是总偏移量，所以需要加上剩余的偏移量。
 
 综上所述可得到最终表达式：
-$$
-\Delta_i=H_{4pt}\left\{ F_{A}^{\frac{1}{2^{4-i}}}, W\left<F_{B}^{\frac{1}{2^{4-i}}}, DLT(\sum_{n=0}^{i-1}\Delta_n) \right> \right\}
-$$
+<br/>
+
+<div align="center">
+<img src="https://latex.codecogs.com/svg.image?\Delta_i=H_{4pt}\left\{&space;F_{A}^{\frac{1}{2^{4-i}}},&space;W\left<F_{B}^{\frac{1}{2^{4-i}}},&space;DLT(\sum_{n=0}^{i-1}\Delta_n)&space;\right>&space;\right\}" title="\Delta_i=H_{4pt}\left\{ F_{A}^{\frac{1}{2^{4-i}}}, W\left<F_{B}^{\frac{1}{2^{4-i}}}, DLT(\sum_{n=0}^{i-1}\Delta_n) \right> \right\}" />
+</div>
 
 由于特征金字塔为三层，最终预测的偏移量表达为：
 
