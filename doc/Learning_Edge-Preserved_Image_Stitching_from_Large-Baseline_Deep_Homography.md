@@ -48,9 +48,11 @@ $$
 
 综上所述可得到最终表达式：
 $$
-\Delta_i=H_{4pt}\Bigg\{F_A^{{1 \over 2}^{4-i}},{\cal W} \Bigg<F_B^{{1 \over 2}^{4-i}},{\cal DLT}(\sum^{i-1}_{n=0}{\Delta_n}) \Bigg> \Bigg\}
+\Delta_i=H_{4pt}\Bigg\{F_A^{{1 \over 2}^{4-i}},{\cal W} \Bigg<F_B^{{1 \over 2}^{4-i}},{\cal DLT}(\sum^{i-1}\_{n=0}{\Delta_n}) \Bigg> \Bigg\}
 $$
+
 由于特征金字塔为三层，最终预测的偏移量表达为：
+
 $$
 \Delta_{w\times h}=\Delta_1+\Delta_2+\Delta_3
 $$
