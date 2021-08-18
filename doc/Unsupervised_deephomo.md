@@ -4,7 +4,7 @@
 
 > - 论文来源：[Nguyen, T., Chen, S. W., Shivakumar, S. S., Taylor, C. J., & Kumar, V. (2018). Unsupervised deep homography: A fast and robust homography estimation model. IEEE Robotics and Automation Letters, 3(3), 2346-2353..(pdf)](https://arxiv.org/pdf/1709.03966)
 > - 数据集：1. 合成数据集MSCOCO2014/2017     2. 真实数据集(未开源)
-> - 参考主页：[tynguyen](https://github.com/tynguyen/unsupervisedDeepHomographyRAL2018)（项目源码）
+> - 参考主页：[tynguyen](https://github.com/tynguyen/unsupervisedDeepHomographyRAL2018)（基于tensorflow的项目源码）
 
 
 <br/><br/><br/>
@@ -57,7 +57,9 @@
 ## 2. 数据集
 本文依旧采用了Deep Homography Estimation中提出合成数据集来训练网络，除此之外为了增加网络对真实环境的适应性，本文还引入了作者团队拍摄的航空图像（未开源）
   
-### 合成数据集示例
+### 合成数据集
+该网络新增了几个输入，合成数据集构建时除了存储patchA同时还需要存储原图$I_A$以及$I_B$。合成数据集因为只有单张图像，在查阅源码后
+
 ### 无人机拍摄的真实数据集（未开源）
 
 
