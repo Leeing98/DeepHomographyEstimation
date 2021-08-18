@@ -11,7 +11,7 @@
 
 
 ## 1. 主要思路
-本文利用Daniel监督学习的回规模型学习出四个点的偏移量（8维tensor），因为要根据这个输出得到两幅patch之间的单应矩阵$\tilde{H}$，所以需要增加一个新的输出，也就是patchA四个顶点的初始值。
+本文利用Daniel监督学习的回规模型学习出四个点的偏移量（8维tensor），因为要根据这个输出得到两幅patch($P_A$, $P_B$)之间的单应矩阵$\tilde{H}$，所以需要增加一个新的输出，也就是patchA四个顶点的初始值。
 
 #### 单应矩阵DLT求解
 下图中红色方框中就是本文网络框架中新增的输入：**patchA四个顶点的初始坐标$C_{4pt}^{A}$**，和**图A原图$I_A$**（非patch）。初始坐标加上预测出的8个偏移量，可以得到patchB的四个顶点坐标，四个顶点对应四个顶点，通过DLT求解之间存在的单应变换矩阵。
@@ -38,10 +38,13 @@
 <div align=center>
   <img src="../.assets/Unsupervised/pipeline2.png" width="700" height="350">
 </div>
-<br/>
+<br/><br/>
 
 > 在Spatial Tranform阶段，之前项目中采用的OpenCV的warpPerspective自然不能使用，这时以下图图例的方式来帮助理解。
->> 1.首先，构建一个和原图B$I_B$一样大的图$V$，图示$V$网格上的每一点就是对应$I_B$的每个像素点，
+>> 1. 首先，构建一个和原图B$I_B$一样大的图$V$，图示$V$网格上的每一点就是对应$I_B$的每个像素点。图$V$实际就是由矩阵和A转换过来的图像。
+>> 2. 图$V$上每个像素的点实际是从$I_A$中采样出来的。由于之前在DLT阶段由$P_A$和$P_B$得到了图像$I_A$到$I_B$的矩阵$\tilde{H}$
+
+
 <div align=center>
   <img src="../.assets/Unsupervised/Photometric%20loss.png" width="400" height="300">
 </div>
