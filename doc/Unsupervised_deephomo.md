@@ -32,13 +32,16 @@
 与Deep Homography Estimation论文中loss函数的构造方式不同，Daniel论文利用8个参数的GT和预测值之间的**欧式距离**作为loss———本篇论文则是利用预测的8个值按照DLT方法求解单应矩阵，单应矩阵对图像进行变形，loss函数是由参考图像和变形后图像像素的**L1范式距离**决定的。
 <br/>
 
-> 如下图所示，从DLT中计算得到的单应矩阵$\tilde{H}$，和patchA的原图$I_A$
+> 如下图所示，从DLT中计算得到的单应矩阵$\tilde{H}$，和patchA的原图$I_A$一齐输入到Spatial Transform模块内，该模块是以采样的形式来实现图像的变形的（我们在理解该概念时查阅了Spatial Transform Layer/Network等相关资料），本文中也详细介绍了STL的实现原理。
 
 <br/>
 <div align=center>
   <img src="../.assets/Unsupervised/pipeline2.png" width="700" height="350">
 </div>
 <br/>
+
+> 在Spatial Tranform阶段，之前项目中采用的OpenCV的warpPerspective自然不能使用，这时以下图图例的方式来帮助理解。
+>> 1.首先，构建一个和原图B$I_B$一样大的图$V$，图示$V$网格上的每一点就是对应$I_B$的每个像素点，
 <div align=center>
   <img src="../.assets/Unsupervised/Photometric%20loss.png" width="400" height="300">
 </div>
@@ -47,7 +50,8 @@
 ## 2. 数据集
 本文依旧采用了Deep Homography Estimation中提出合成数据集来训练网络，除此之外为了增加网络对真实环境的适应性，本文还引入了作者团队拍摄的航空图像（未开源）
   
-### 合成数据集代码示例
+### 合成数据集示例
+### 无人机拍摄的真实数据集（未开源）
 
 
 
