@@ -60,7 +60,7 @@
 ### 合成数据集
 > 生成合成数据集的源码文件[gen_synthetic_data.py](https://github.com/tynguyen/unsupervisedDeepHomographyRAL2018/blob/master/code/utils/gen_synthetic_data.py)
 <br/>
-该网络新增了几个输入，合成数据集构建时除了存储patchA、patchB和GT之外还需要存储原图$I_A$以及$I_B$。在源码中，作者存储了$P_A$的四个点的坐标，两幅图像之间的单应矩阵(GT)，两个图像原图的文件名。
+该网络新增了几个输入，合成数据集构建时除了存储patchA、patchB和GT之外还需要存储原图$I_A$以及$I_B$。在以下源码中，作者存储$P_A$的四个点的坐标(f_pts1)，两幅图像之间的单应矩阵(f_gt)，两个图像原图的文件名(f_file_list)。
 
 <br/><br/>
 ```python
