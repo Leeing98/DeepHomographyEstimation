@@ -120,7 +120,10 @@ gray_image和inv_warped_image在这里就分别代表$I_A$和$I_B$。
 
 <br/><br/><br/>
 ## 3. 网络结构
-  
+本文的网络结构在回归四个顶点偏移量的时候借用了Deep image Homography Estimation的回归网络模型，后续的模块在计算损失函数的时候借用了Spatial Transform Layer的方案。
+<div align="center">
+  <img src="../.assets/Unsupervised/network structure.png">
+  </div>
 <br/>
 
 ```python
