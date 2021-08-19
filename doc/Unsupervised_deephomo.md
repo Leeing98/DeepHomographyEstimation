@@ -137,8 +137,9 @@ gray_image和inv_warped_image在这里就分别代表$I_A$和$I_B$。
 - 
 
 <br/>
-<img src="../.assets/Unsupervised/experiment_1.png" width="600" align="center">
-
+<div align="center">
+<img src="../.assets/Unsupervised/experiment_1.png" width="800" >
+</div>
 
 
 
