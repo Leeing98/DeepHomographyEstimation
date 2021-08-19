@@ -80,6 +80,8 @@
 
 <br/>
 合成数据集因为只有单张图像，看论文的时候觉得$I_B$的指向性不明确。在查阅源码后，发现合成数据集的$I_B$实际上是对$I_A$进行$H_{inv}$矩阵透视变换后的图像，见下方代码。
+<br/>
+
 ```python
   # compute Homography 
   H = cv2.getPerspectiveTransform(np.float32(four_points), np.float32(perturbed_four_points))
@@ -106,6 +108,8 @@
         cv2.imwrite(img_prime_path, inv_warped_image)
   
 ```
+
+
 gray_image和inv_warped_image在这里就分别代表$I_A$和$I_B$。
 
 
@@ -119,7 +123,6 @@ gray_image和inv_warped_image在这里就分别代表$I_A$和$I_B$。
   
 <br/>
 
-
 ```python
 
 ```
@@ -127,15 +130,16 @@ gray_image和inv_warped_image在这里就分别代表$I_A$和$I_B$。
 
 <br/><br/>
 ## 4. 实验结果
-
+### 合成数据集
+测评指标为四个点偏移量的**均方根误差(RMSE)**。重叠率表示的是$P_A$四个顶点有较小的偏移($P_A$和$P_B$的重叠率为85%)。作者将本文的方法和单位矩阵、SIFT、ECC和基于监督的方法进行比较。<br/>
+- 重叠率85%
+> 在重叠率较大的情形下，
+- 
 
 <br/>
+<img src="../.assets/Unsupervised/experiment_1.png" width="600" align="center">
 
-<center>
-<figure>
-  <img src = ""  width = "400" align = left>
-</figure>
-</center>
+
 
 
 <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
