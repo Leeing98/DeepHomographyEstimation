@@ -59,7 +59,21 @@
   
 ### 合成数据集
 > 生成合成数据集的源码文件[gen_synthetic_data.py](https://github.com/tynguyen/unsupervisedDeepHomographyRAL2018/blob/master/code/utils/gen_synthetic_data.py)
-该网络新增了几个输入，合成数据集构建时除了存储patchA同时还需要存储原图$I_A$以及$I_B$。合成数据集因为只有单张图像，在查阅源码后，发现合成数据集的$I_B$实际上是
+<br/>
+该网络新增了几个输入，合成数据集构建时除了存储patchA、patchB和GT之外还需要存储原图$I_A$以及$I_B$。
+```python
+  # Text files to store homography parameters (4 corners)
+  if args.mode=='train' and not args.debug:
+    f_pts1      = open(args.pts1_file, 'ab')
+    f_gt        = open(args.gt_file, 'ab')
+    f_file_list = open(args.filenames_file, 'ab')
+
+  np.savetxt(f_gt, [gt], delimiter= ' ')
+  np.savetxt(f_pts1, [pts1], delimiter= ' ')
+  f_file_list.write('%s %s\n'%(str(index)  +'.jpg', str(index)  +'.jpg') )
+```
+
+合成数据集因为只有单张图像，在查阅源码后，发现合成数据集的$I_B$实际上是
 
 ### 无人机拍摄的真实数据集（未开源）
 
