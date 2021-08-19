@@ -122,12 +122,40 @@ gray_image和inv_warped_image在这里就分别代表$I_A$和$I_B$。
 ## 3. 网络结构
 本文的网络结构在回归四个顶点偏移量的时候借用了Deep image Homography Estimation的回归网络模型，后续的模块在计算损失函数的时候借用了Spatial Transform Layer的方案。
 <div align="center">
-  <img src="../.assets/Unsupervised/network structure.png">
+  <img src="../.assets/Unsupervised/network structure.png" width="700">
   </div>
 <br/>
 
-```python
 
+详见项目源码，utils文件夹内包含生成合成数据集和真实场景数据集的代码、图像空间变换的功能函数。code文件夹内homography_CNN_\*是深度神经网络方法在两个数据集上的训练代码。homography_Conventional_\*是传统方法代码。homography_model是本文网络结构源码，具体结构与监督方法的回归网络模型基本一致，如下（文件line88-133）：
+```python
+def _vgg(self):
+    with tf.variable_scope('conv_block1', reuse=self.reuse_variables): # H
+      conv1 = self._conv_block(self.model_input, ([64, 64]), (3, 3), (1, 1))
+      maxpool1 = self._maxpool2d(conv1, 2, 2) # H/2
+    with tf.variable_scope('conv_block2', reuse=self.reuse_variables):
+      conv2 = self._conv_block(maxpool1, ([64, 64]), (3, 3), (1, 1))
+      maxpool2 = self._maxpool2d(conv2, 2, 2) # H/4
+    with tf.variable_scope('conv_block3', reuse=self.reuse_variables):
+      conv3 = self._conv_block(maxpool2, ([128, 128]), (3, 3), (1, 1))
+      maxpool3 = self._maxpool2d(conv3, 2, 2) # H/8
+    with tf.variable_scope('conv_block4', reuse=self.reuse_variables):
+      conv4 = self._conv_block(maxpool3, ([128, 128]), (3, 3), (1, 1))
+      # Dropout
+      keep_prob = 0.5 if self.mode=='train' else 1.0
+      dropout_conv4 = slim.dropout(conv4, keep_prob)
+
+    # Flatten dropout_conv4
+    out_conv_flat = slim.flatten(dropout_conv4)
+
+    # Two fully-connected layers
+    with tf.variable_scope('fc1'):
+      fc1 = slim.fully_connected(out_conv_flat, 1024, scope='fc1')
+      dropout_fc1 = slim.dropout(fc1, keep_prob)
+    with tf.variable_scope('fc2'):
+      fc2 = slim.fully_connected(dropout_fc1, 8, scope='fc2', activation_fn=None) #BATCH_SIZE x 8
+
+    self.pred_h4p = fc2
 ```
 
 
