@@ -60,9 +60,11 @@
 ### 合成数据集
 > 生成合成数据集的源码文件[gen_synthetic_data.py](https://github.com/tynguyen/unsupervisedDeepHomographyRAL2018/blob/master/code/utils/gen_synthetic_data.py)
 <br/>
-该网络新增了几个输入，合成数据集构建时除了存储patchA、patchB和GT之外还需要存储原图$I_A$以及$I_B$。在以下源码中，作者存储$P_A$的四个点的坐标(f_pts1)，两幅图像之间的单应矩阵(f_gt)，两个图像原图的文件名(f_file_list)。
+该网络新增了几个输入，合成数据集构建时除了存储patchA、patchB和GT之外还需要存储原图$I_A$以及$I_B$。在以下源码中，作者存储$P_A$的四个点的坐标(f_pts1)，两幅图像之间的单应矩阵(f_gt)，两个图像原图的文件名(f_file_list)。 
 
-<br/><br/>
+<br/>
+
+
 ```python
   # Text files to store homography parameters (4 corners)
   if args.mode=='train' and not args.debug:
@@ -76,10 +78,38 @@
   f_file_list.write('%s %s\n'%(str(index)  +'.jpg', str(index)  +'.jpg') )
 ```
 
-
 <br/>
-合成数据集因为只有单张图像，在查阅源码后，发现合成数据集的$I_B$实际上是
+合成数据集因为只有单张图像，看论文的时候觉得$I_B$的指向性不明确。在查阅源码后，发现合成数据集的$I_B$实际上是对$I_A$进行$H_{inv}$矩阵透视变换后的图像，见下方代码。
+```python
+  # compute Homography 
+  H = cv2.getPerspectiveTransform(np.float32(four_points), np.float32(perturbed_four_points))
+  try:
+      H_inverse = inv(H)
+    except:
+      print "singular Error!"
+      return index, 0
+  ...
+  ...
+  inv_warped_image = numpy_transformer(gray_image, H_inverse, (width, height))
+  ...
+  ...
+  # Save synthetic data
+    large_img_path    = os.path.join(args.I_dir, str(index) + '.jpg')
 
+    if args.mode == 'train' and args.color==False:
+      cv2.imwrite(large_img_path, gray_image)
+  ...
+  ...
+    if args.I_prime_dir is not None:
+      img_prime_path = os.path.join(args.I_prime_dir, str(index) + '.jpg')
+      if args.mode == 'train' and args.color==False:
+        cv2.imwrite(img_prime_path, inv_warped_image)
+  
+```
+gray_image和inv_warped_image在这里就分别代表$I_A$和$I_B$。
+
+
+<br/><br/>
 ### 无人机拍摄的真实数据集（未开源）
 
 
