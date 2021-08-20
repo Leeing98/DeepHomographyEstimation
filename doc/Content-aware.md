@@ -10,7 +10,14 @@
 
 
 ## 1. 主要思路
-本文希望通过输入两幅大小一致的图像由网络学习得到**8个参数**，对应两幅图像之间存在的单应关系（矩阵H为8DoF）。
+首先根据下图，我们分析2016年Daniel团队的监督学习论文和2018年Nguyen团队的非监督学习的论文存在的缺点和不足：
+<div align = "center">
+<img src = "../.assets/Content-aware/comparison.png" width = "700">  
+</div>
+
+> 
+
+
 #### Feature extractor(特征图提取)
 
 #### Mask predictor(mask预测)
