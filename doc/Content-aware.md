@@ -39,25 +39,41 @@
 
 <br/><br/><br/>
 ## 2. 数据集
-本文的数据集为Content-Aware-DeepH-Data，是作者团队拍摄的视频数据，通过video2img
-
-
+本文的数据集为Content-Aware-DeepH-Data，是作者团队拍摄的视频数据。视频数据放置在项目源码文件夹内的/Data文件夹内。数据的读取方式是从Train_List.txt文件中读取，每一行记录两帧的文件名。txt的生成方式本文没有给出，是由个人定义的。项目文件中给出的两帧图像间隔的帧数经观察为2~8帧，因此两幅图像之间的重叠基本在70%以上。
+<div align="center">
+<img src="../.assets/Content-aware/dataset.png" width="600">
+</div>
 
 <br/><br/><br/>
 ## 3. 网络结构
-如下图所示是本文网络的整体框架，主要集中在上一章节的三个大改进上。输入阶段是两张大小一样的图像
+如下图所示是本文网络的整体框架，主要集中在上一章节的三个大改进上。输入阶段是两张大小一样的图像，每幅图像都分别进入一个特征提取网络和一个Mask预测网络。特征提取网络输出的图像$F_a$和mask预测网络输出的图像$M_a$大小一致，最后进行一个矩阵的点乘得到图像$G_a$。两个经过点乘的图像输入单应性估计网络得到预测的8维向量结果。
 <br/>
 <div align=center>
   <img src="../.assets/Content-aware/Network structure.png" width="700">
   </div>
   
 <br/>
+
+以下是本文网络最重要的三个网络：
 #### Feature extractor(特征图提取)
+<div align=center>
+  <img src="../.assets/Content-aware/Feature_extractor.png" width="350">
+  </div>
+<br/>
+
 
 #### Mask predictor(mask预测)
+<div align=center>
+  <img src="../.assets/Content-aware/Mask predictor.png" width="600">
+  </div>
+<br/>
 
 #### Homography estimator(单应性估计)
-
+<div align=center>
+  <img src="../.assets/Content-aware/Homography estimator.png" width="800">
+  </div>
+<br/>
+在此网络中，我们注意到一个问题————该网络的输入图像大小是不固定的。这是因为在单应估计网络这部分，倒数第二层采用了一个全局平均池化层，经过该层的数据变为512维的张量，最后进入全连接层输出一个8维的结果。
 
 ```python
 
