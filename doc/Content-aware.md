@@ -207,9 +207,9 @@ self.genMask = nn.Sequential(
 <br/>
 
 损失函数的形式化表达为：
-<div align=center>
-  <img src="<img src="https://latex.codecogs.com/svg.image?L_n({I_a}\',{I_b})=\frac{\sum_{i}^{}{M_a}\'{M_b}\cdot&space;\left\|&space;{F_a}\'-F_b\right\|_1}{\sum_{i}^{}{M_a}\'M_b}" title="L_n({I_a}\',{I_b})=\frac{\sum_{i}^{}{M_a}\'{M_b}\cdot \left\| {F_a}\'-F_b\right\|_1}{\sum_{i}^{}{M_a}\'M_b}" />">
-  </div>
+$$
+ L_n({I_a}\',{I_b})=\frac{\sum_{i}{M_a}\'{M_b}\cdot \left\| {F_a}\'-F_b\right\|\_1}{\sum_{i}{M_a}\'M_b}" />">
+$$
 
 ```python
         pred_I2 = transform(patch_size_h, patch_size_w, M_tile_inv, H_mat, M_tile,
