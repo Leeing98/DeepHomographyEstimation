@@ -208,7 +208,7 @@ self.genMask = nn.Sequential(
 
 损失函数的形式化表达为：
 $$
- L_n({I_a}\',{I_b})=\frac{\sum_{i}{M_a}\'{M_b}\cdot \left\| {F_a}\'-F_b \right\|}{\sum_{i}{M_a}\'M_b}
+ L_n({I_a}\',{I_b})=\frac{\sum_{i}{M_a}\'{M_b}\cdot \Vert {F_a}\'-F_b \Vert_1}{\sum_{i}{M_a}\'M_b}
 $$
 
 ```python
