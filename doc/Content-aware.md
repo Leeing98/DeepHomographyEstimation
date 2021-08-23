@@ -81,6 +81,7 @@ self.ShareFeature = nn.Sequential(
 ```
 
 
+<br/>
 
 #### 3.2 Mask predictor(mask预测)
 <br/>
@@ -114,6 +115,7 @@ self.genMask = nn.Sequential(
         )
 ```
 
+<br/>
 
 #### 3.3 Homography estimator(单应性估计)
 <br/>
@@ -160,9 +162,14 @@ self.genMask = nn.Sequential(
 
 
 ```
+<br/>
 
 #### 3.4 Triplet Loss函数
-
+<br/>
+<div align=center>
+  <img src="../.assets/Content-aware/Triplet loss.png" width="800">
+  </div>
+<br/>
 
 
 <br/><br/>
