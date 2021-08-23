@@ -123,7 +123,8 @@ self.genMask = nn.Sequential(
   <img src="../.assets/Content-aware/Homography estimator.png" width="800">
   </div>
 <br/>
-在此网络中，我们注意到一个问题————该网络的输入图像大小是不固定的。这是因为在单应估计网络这部分，倒数第二层采用了一个**全局平均池化层**，经过该层的数据变为512维的张量，最后进入全连接层输出一个8维的结果。该部分经讨论，发现该网络结构是在resnet结构上进行的修改，单应性估计的结构就是采用的resnet的代码。而生成特征图网络和mask预测网络是作者在resnet源码基础上增加的。
+
+在此网络中，我们注意到一个问题——该网络的输入图像大小是不固定的。这是因为在单应估计网络这部分，倒数第二层采用了一个**全局平均池化层**。经过该层的数据变为512维的张量，最后进入全连接层输出一个8维的结果。该部分经讨论，发现该网络结构是在resnet结构上进行的修改，单应性估计的结构就是采用的resnet的代码。而生成特征图网络和mask预测网络是作者在resnet源码基础上增加的。
 
 
 ```python
@@ -167,7 +168,7 @@ self.genMask = nn.Sequential(
 #### 3.4 Triplet Loss函数
 <br/>
 <div align=center>
-  <img src="../.assets/Content-aware/Triplet loss.png" width="800">
+  <img src="../.assets/Content-aware/Triplet loss.png" width="400">
   </div>
 <br/>
 
