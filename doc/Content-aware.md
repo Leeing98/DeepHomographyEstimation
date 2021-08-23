@@ -55,7 +55,9 @@
 <br/>
 
 以下是本文网络最重要的三个网络：
-#### Feature extractor(特征图提取)
+#### 3.1 Feature extractor(特征图提取)
+
+<br/>
 <div align=center>
   <img src="../.assets/Content-aware/Feature_extractor.png" width="350">
   </div>
@@ -80,7 +82,8 @@ self.ShareFeature = nn.Sequential(
 
 
 
-#### Mask predictor(mask预测)
+#### 3.2 Mask predictor(mask预测)
+<br/>
 <div align=center>
   <img src="../.assets/Content-aware/Mask predictor.png" width="600">
   </div>
@@ -112,7 +115,8 @@ self.genMask = nn.Sequential(
 ```
 
 
-#### Homography estimator(单应性估计)
+#### 3.3 Homography estimator(单应性估计)
+<br/>
 <div align=center>
   <img src="../.assets/Content-aware/Homography estimator.png" width="800">
   </div>
@@ -156,6 +160,9 @@ self.genMask = nn.Sequential(
 
 
 ```
+
+#### 3.4 Triplet Loss函数
+
 
 
 <br/><br/>
