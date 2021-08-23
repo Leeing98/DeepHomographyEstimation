@@ -214,22 +214,23 @@ $$L(I_a,I_b)=\Vert F_a-F_b \Vert_1$$
 
 $$\displaystyle \min_{m,f,h}L_n({I_a}\', I_b)+L_n({I_b}\',I_a)-\lambda L(I_a,I_b)+\mu \Vert H_{ab}H_{ba}-I \Vert_2^2$$
 
-
+<br/>
+我们根据源码来分析它损失函数的写法：
 
 ```python
         pred_I2 = transform(patch_size_h, patch_size_w, M_tile_inv, H_mat, M_tile,
-                            org_imges[:, :1, ...], patch_indices, batch_indices_tensor)   #利用预测出的H_mat对原图I1进行变形转到I2的图像坐标系下
+                            org_imges[:, :1, ...], patch_indices, batch_indices_tensor)   #利用预测出的H_mat对原图I1进行变形转到I2的图像坐标系下并取patch位置
         pred_Mask = transform(patch_size_h, patch_size_w, M_tile_inv, H_mat, M_tile,
-                            mask_I1_full, patch_indices, batch_indices_tensor)            #同样对I1的mask进行变形
+                            mask_I1_full, patch_indices, batch_indices_tensor)            #同样对I1的mask进行变形并取patch位置得到pred_Mask,等同于公式中的Ma'
 
-        pred_Mask = normMask(pred_Mask)                                                   
+        pred_Mask = normMask(pred_Mask)                                                   #归一化  
  
-        mask_ap = torch.mul(mask_I2, pred_Mask)
+        mask_ap = torch.mul(mask_I2, pred_Mask)                                           #I2上取的patch大小的mask_I2和pred_Mask做矩阵点乘,等同于公式中Ma'Mb
 
-        sum_value = torch.sum(mask_ap)
-        pred_I2_CnnFeature = self.ShareFeature(pred_I2)
+        sum_value = torch.sum(mask_ap)                                                    #累和，Ln的分母
+        pred_I2_CnnFeature = self.ShareFeature(pred_I2)                                   #等同于对变形后的I1的patch求取特征图得到公式里的Fa'
  
-        feature_loss_mat = triplet_loss(patch_2, pred_I2_CnnFeature, patch_1)
+        feature_loss_mat = triplet_loss(patch_2, pred_I2_CnnFeature, patch_1)             #TripletLoss的就是为了
 
         feature_loss = torch.sum(torch.mul(feature_loss_mat, mask_ap)) / sum_value
         feature_loss = torch.unsqueeze(feature_loss, 0)
