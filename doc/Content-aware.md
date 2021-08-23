@@ -62,20 +62,98 @@
 <br/>
 
 
+```python
+self.ShareFeature = nn.Sequential(
+            nn.Conv2d(1, 4, kernel_size=3, padding=1, bias=False),
+            nn.BatchNorm2d(4),
+            nn.ReLU(inplace=True),
+
+            nn.Conv2d(4, 8, kernel_size=3, padding=1, bias=False),
+            nn.BatchNorm2d(8),
+            nn.ReLU(inplace=True),
+
+            nn.Conv2d(8, 1, kernel_size=3, padding=1, bias=False),
+            nn.BatchNorm2d(1),
+            nn.ReLU(inplace=True),
+        )
+```
+
+
+
 #### Mask predictor(mask预测)
 <div align=center>
   <img src="../.assets/Content-aware/Mask predictor.png" width="600">
   </div>
 <br/>
 
+
+```python
+self.genMask = nn.Sequential(
+            nn.Conv2d(1, 4, kernel_size=3, padding=1, bias=False),
+            nn.BatchNorm2d(4),
+            nn.ReLU(inplace=True),
+
+            nn.Conv2d(4, 8, kernel_size=3, padding=1, bias=False),
+            nn.BatchNorm2d(8),
+            nn.ReLU(inplace=True),
+
+            nn.Conv2d(8, 16, kernel_size=3, padding=1, bias=False),
+            nn.BatchNorm2d(16),
+            nn.ReLU(inplace=True),
+
+            nn.Conv2d(16, 32, kernel_size=3, padding=1, bias=False),
+            nn.BatchNorm2d(32),
+            nn.ReLU(inplace=True),
+
+            nn.Conv2d(32, 1, kernel_size=3, padding=1, bias=False),
+            nn.BatchNorm2d(1),
+            nn.Sigmoid(),
+        )
+```
+
+
 #### Homography estimator(单应性估计)
 <div align=center>
   <img src="../.assets/Content-aware/Homography estimator.png" width="800">
   </div>
 <br/>
-在此网络中，我们注意到一个问题————该网络的输入图像大小是不固定的。这是因为在单应估计网络这部分，倒数第二层采用了一个全局平均池化层，经过该层的数据变为512维的张量，最后进入全连接层输出一个8维的结果。
+在此网络中，我们注意到一个问题————该网络的输入图像大小是不固定的。这是因为在单应估计网络这部分，倒数第二层采用了一个**全局平均池化层**，经过该层的数据变为512维的张量，最后进入全连接层输出一个8维的结果。该部分经讨论，发现该网络结构是在resnet结构上进行的修改，单应性估计的结构就是采用的resnet的代码。而生成特征图网络和mask预测网络是作者在resnet源码基础上增加的。
+
 
 ```python
+        self.conv1 = nn.Conv2d(2, 64, kernel_size=7, stride=2, padding=3,
+                               bias=False)
+        self.bn1 = nn.BatchNorm2d(64)
+        self.relu = nn.ReLU(inplace=True)
+        self.maxpool = nn.MaxPool2d(kernel_size=3, stride=2, padding=1)
+        self.layer1 = self._make_layer(block, 64, layers[0])
+        self.layer2 = self._make_layer(block, 128, layers[1], stride=2)
+        self.layer3 = self._make_layer(block, 256, layers[2], stride=2)
+        self.layer4 = self._make_layer(block, 512, layers[3], stride=2)
+        self.avgpool = nn.AvgPool2d(7, stride=1)
+        self.fc = nn.Linear(512 * block.expansion, num_classes)
+        ...
+        ...
+        patch_1_res = torch.mul(patch_1, mask_I1)
+        patch_2_res = torch.mul(patch_2, mask_I2)
+        x = torch.cat((patch_1_res, patch_2_res), dim=1)   #此处为合并两个patch输入单应估计模型
+
+        x = self.conv1(x)
+        x = self.bn1(x)
+        x = self.relu(x)
+        x = self.maxpool(x)
+
+        x = self.layer1(x)
+        x = self.layer2(x)
+        x = self.layer3(x)
+        x = self.layer4(x)
+
+        x = self.avgpool(x)
+        x = x.view(x.size(0), -1)
+        x = self.fc(x)
+        
+        H_mat = DLT_solve(h4p, x).squeeze(1)
+
 
 ```
 
