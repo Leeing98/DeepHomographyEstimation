@@ -39,10 +39,41 @@
 
 <br/><br/><br/>
 ## 2. 数据集
-本文的数据集为Content-Aware-DeepH-Data，是作者团队拍摄的视频数据。视频数据放置在项目源码文件夹内的/Data文件夹内。数据的读取方式是从Train_List.txt文件中读取，每一行记录两帧的文件名。txt的生成方式本文没有给出，是由个人定义的。项目文件中给出的两帧图像间隔的帧数经观察为2~8帧，因此两幅图像之间的重叠基本在70%以上。
+本文的数据集为Content-Aware-DeepH-Data，是作者团队拍摄的视频数据。视频数据放置在项目源码文件夹内的/Data文件夹内。数据的读取方式是从Train_List.txt文件中读取，每一行记录两帧的文件名。txt的生成方式本文没有给出，是由个人定义的。项目文件中给出的两帧图像间隔的帧数经观察为2~8帧，因此两幅图像之间的重叠率基本在70%以上。
 <div align="center">
 <img src="../.assets/Content-aware/dataset.png" width="600">
 </div>
+<br/>
+数据集的读取函数在项目文件的dataset.py中，主要就是根据Train_List.txt文件的文件名读取文件，并对图像做预处理。return的对象包含：两张原图，输入网络的两个patch，patch的索引和patch的四个顶点坐标。
+
+```python
+        org_img = np.concatenate([img_1, img_2], axis=0)
+
+        x = np.random.randint(self.rho, self.WIDTH - self.rho - self.patch_w)
+        y = np.random.randint(self.rho, self.HEIGHT - self.rho - self.patch_h)
+
+        input_tesnor = org_img[:, y: y + self.patch_h, x: x + self.patch_w]
+
+        y_t_flat = np.reshape(self.y_mesh, (-1))
+        x_t_flat = np.reshape(self.x_mesh, (-1))
+        patch_indices = (y_t_flat + y) * self.WIDTH + (x_t_flat + x)
+
+        top_left_point = (x, y)
+        bottom_left_point = (x, y + self.patch_h)
+        bottom_right_point = (self.patch_w + x, self.patch_h + y)
+        top_right_point = (x + self.patch_w, y)
+        h4p = [top_left_point, bottom_left_point, bottom_right_point, top_right_point]
+
+        h4p = np.reshape(h4p, (-1))
+
+        org_img = torch.tensor(org_img)
+        input_tesnor = torch.tensor(input_tesnor)
+        patch_indices = torch.tensor(patch_indices)
+        h4p = torch.tensor(h4p)
+
+        return (org_img, input_tesnor, patch_indices, h4p)
+```
+
 
 <br/><br/><br/>
 ## 3. 网络结构
