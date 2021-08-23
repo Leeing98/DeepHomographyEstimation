@@ -207,13 +207,12 @@ self.genMask = nn.Sequential(
 <br/>
 
 损失函数的形式化表达为：
-$$
- L_n({I_a}\',{I_b})=\frac{\sum_{i}{M_a}\'{M_b}\cdot \Vert {F_a}\'-F_b \Vert_1}{\sum_{i}{M_a}\'M_b}
- 
- L(I_a,I_b)=\Vert F_a-F_b \Vert_1
 
- \displaystyle \min_{m,f,h}L_n({I_a}\', I_b)+L_n({I_b}\',I_a)-\lambda L(I_a,I_b)+\mu \Vert H_{ab}H_{ba}-I \Vert_2^2
-$$
+$$L_n({I_a}\',{I_b})=\frac{\sum_{i}{M_a}\'{M_b}\cdot \Vert {F_a}\'-F_b \Vert_1}{\sum_{i}{M_a}\'M_b}$$
+ 
+$$L(I_a,I_b)=\Vert F_a-F_b \Vert_1$$
+
+$$\displaystyle \min_{m,f,h}L_n({I_a}\', I_b)+L_n({I_b}\',I_a)-\lambda L(I_a,I_b)+\mu \Vert H_{ab}H_{ba}-I \Vert_2^2$$
 
 
 
