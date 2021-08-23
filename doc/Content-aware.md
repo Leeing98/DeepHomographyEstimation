@@ -87,7 +87,7 @@
 
 以下是本文网络最重要的三个网络：
 #### 3.1 Feature extractor(特征图提取)
-
+根据源码的书写，输入特征提取网络的图像不是原图org_img(大小为640x360)而是选取的input_tensor(大小为560x315)。
 <br/>
 <div align=center>
   <img src="../.assets/Content-aware/Feature_extractor.png" width="350">
@@ -115,6 +115,7 @@ self.ShareFeature = nn.Sequential(
 <br/>
 
 #### 3.2 Mask predictor(mask预测)
+输入该mask预测网络的图像是原图大小，然后利用函数getPatchFromFullimg得到patch大小的图像。
 <br/>
 <div align=center>
   <img src="../.assets/Content-aware/Mask predictor.png" width="600">
@@ -197,11 +198,37 @@ self.genMask = nn.Sequential(
 <br/>
 
 #### 3.4 Triplet Loss函数
+网络在构建loss函数的时候采用了TripletMarginLoss来构建损失函数。
+
 <br/>
 <div align=center>
-  <img src="../.assets/Content-aware/Triplet loss.png" width="400">
+  <img src="../.assets/Content-aware/Triplet loss.png" width="350">
   </div>
 <br/>
+
+损失函数的形式化表达为：
+<div align=center>
+  <img src="<img src="https://latex.codecogs.com/svg.image?L_n({I_a}\',{I_b})=\frac{\sum_{i}^{}{M_a}\'{M_b}\cdot&space;\left\|&space;{F_a}\'-F_b\right\|_1}{\sum_{i}^{}{M_a}\'M_b}" title="L_n({I_a}\',{I_b})=\frac{\sum_{i}^{}{M_a}\'{M_b}\cdot \left\| {F_a}\'-F_b\right\|_1}{\sum_{i}^{}{M_a}\'M_b}" />">
+  </div>
+
+```python
+        pred_I2 = transform(patch_size_h, patch_size_w, M_tile_inv, H_mat, M_tile,
+                            org_imges[:, :1, ...], patch_indices, batch_indices_tensor)   #利用预测出的H_mat对原图I1进行变形转到I2的图像坐标系下
+        pred_Mask = transform(patch_size_h, patch_size_w, M_tile_inv, H_mat, M_tile,
+                            mask_I1_full, patch_indices, batch_indices_tensor)            #同样对I1的mask进行变形
+
+        pred_Mask = normMask(pred_Mask)                                                   
+ 
+        mask_ap = torch.mul(mask_I2, pred_Mask)
+
+        sum_value = torch.sum(mask_ap)
+        pred_I2_CnnFeature = self.ShareFeature(pred_I2)
+ 
+        feature_loss_mat = triplet_loss(patch_2, pred_I2_CnnFeature, patch_1)
+
+        feature_loss = torch.sum(torch.mul(feature_loss_mat, mask_ap)) / sum_value
+        feature_loss = torch.unsqueeze(feature_loss, 0)
+```
 
 
 <br/><br/>
