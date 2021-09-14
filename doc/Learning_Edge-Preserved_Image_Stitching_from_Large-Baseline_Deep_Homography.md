@@ -88,7 +88,7 @@ $$
 该分支在缝合边的引导下生成缝合图像。为了实现边缘保持图像拼接，在decoder阶段使用edge deformation branch学习的边缘特征来引导学习。最后使用fusion block将两个分支的最后的特征图融合起来。
 
 <div align="center">
-<img src="../.assets/Learning Edge-Preserved Image Stitching from Large-Baseline Deep Homography/fusion block.png">
+<img src="../.assets/Learning_Edge-Preserved_Image_Stitching_from_Large-Baseline_Deep_Homography/fusion block.png">
 </div>
 
 
