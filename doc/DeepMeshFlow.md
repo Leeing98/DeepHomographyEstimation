@@ -26,11 +26,9 @@
   
 - $m(\cdot)$：掩码预测网络，全由卷积层构成，输出掩码$M_a、M_b$。通过对掩码进行归一化处理并且加大权重后可以达到**突出特征图中重要内容**的效果，该效果**类似传统算法中的RANSAC**。
 
-$$
-M_a=m(I_a),　G_a=F_aM_a  
-\newline 
-M_b=m(I_b),　G_b=F_bM_b
-$$
+$$ M_a=m(I_a),　G_a=F_aM_a  $$
+<br/>
+$$ M_b=m(I_b),　G_b=F_bM_b  $$
 
 - $h(\cdot)$：meshflow回归网络，backbone为ResNet-34，输出K个mesh flow。
   $$
@@ -49,7 +47,7 @@ $$
   M_2^{'}\rightarrow ({H_g\over 4}+1)\times({W_g\over 4}+1)\times 2=5\times 5\times 2 \\
   M_3\rightarrow ({H_g}+1)\times({W_g}+1)\times 2=17\times 17\times 2
   $$
-  之后将粗尺度$M_1^`、M_2^`$上采样到$M_3$分辨率，并且依靠场景分割网络$S$加以融合，得到最终结果$M^* $。
+  之后将粗尺度$M_1^{'}、M_2^{'}$上采样到$M_3$分辨率，并且依靠场景分割网络$S$加以融合，得到最终结果$M^* $。
   
   $$
   M^* (u,v) = M_{\hat k}(u,v)　\hat{k}=argmax_kS(u,v,k)
