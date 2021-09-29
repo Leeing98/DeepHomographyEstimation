@@ -50,7 +50,6 @@ $$
   
   $$
   M^{* }(u,v) = M_{\hat k}(u,v)　\hat{k}=argmax_kS(u,v,k)
-  
   $$
   即按照掩码中的最大值选择mesh flow中的对应值。
 
