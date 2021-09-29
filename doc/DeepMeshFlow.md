@@ -27,7 +27,7 @@
 - $m(\cdot)$：掩码预测网络，全由卷积层构成，输出掩码$M_a、M_b$。通过对掩码进行归一化处理并且加大权重后可以达到**突出特征图中重要内容**的效果，该效果**类似传统算法中的RANSAC**。
 
 $$
-M_a=m_a(I_a),　G_a=F_aM_a \\M_b=m_b(I_b),　G_b=F_bM_b
+M_a=m_a(I_a),　G_a=F_a M_a \\M_b=m_b(I_b),　G_b=F_bM_b
 $$
 
 - $h(\cdot)$：meshflow回归网络，backbone为ResNet-34，输出K个mesh flow。
