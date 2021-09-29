@@ -81,7 +81,7 @@ $$
 - 本文与content-aware创新点主要在mask的使用，它可以消除对齐时不可分辨或者具有误导性的区域，比如低纹理或者运动物体。
 
 <div>
-    <img src="./deepmeshflow/mask.png">
+    <img src="../.assets/deepmeshflow/mask.png">
 </div>
 
 - 对比实验中使用$l2$距离来衡量拼接质量的好坏，结果表示本文的方法相比之前的方法达到最优，同时对比了各个尺寸的mesh的效果，本文的自适应尺寸mesh效果最优
