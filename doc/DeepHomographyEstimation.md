@@ -7,7 +7,7 @@
 > - 参考主页（源码未开源）：
 >> 1. [alexhagiopol](https://github.com/alexhagiopol/deep_homography_estimation)
 >> 2. [mazenmel](https://github.com/mazenmel/Deep-homography-estimation-Pytorch)
->> 3. [**mez**](https://github.com/mazenmel/Deep-homography-estimation-Pytorch)(包含数据集预处理可视化全过程的ipynb文件)
+>> 3. [**mez**](https://github.com/mez/deep_homography_estimation)(包含数据集预处理可视化全过程的ipynb文件)
 
 <br/><br/><br/>
 
